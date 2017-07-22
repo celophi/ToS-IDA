@@ -13,7 +13,7 @@ if GetStrucIdByName ("lua_State") == BADADDR:
 typedef union {
   void *gc;
   void *p;
-  int n;
+  double n;
   int b;
 } LuaValue;
 
