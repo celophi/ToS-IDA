@@ -10,7 +10,7 @@ import idc
 
 
 """
-Getter example : 
+Getter example :
 .text:00FEE870                     push    offset aFast    ; "FAST"
 .text:00FEE875                     call    LuaInterface__getInstance
 .text:00FEE87A                     mov     ecx, eax
@@ -19,9 +19,10 @@ Getter example :
 .text:00FEE886                     retn
 """
 
-LuaInterface__getInstance = 0x00D75EF0
-LuaInterface__getObject   = 0x00D75EA0
-LuaInterface__getObjectEx = 0x00DBBCB0
+#i164556
+LuaInterface__getInstance = 0x00CB5C40
+LuaInterface__getObject   = 0x00CB5CA0
+LuaInterface__getObjectEx = 0x00CFA7C0
 
 MakeNameEx (LuaInterface__getInstance, "LuaInterface::getInstance", SN_NOWARN);
 MakeNameEx (LuaInterface__getObject, "LuaInterface::getObject", SN_NOWARN);
@@ -44,10 +45,10 @@ while occ != BADADDR:
     getObjectAddress = NextHead (movAddress);
     movAddress2 = NextHead (getObjectAddress);
     retnAddress = NextHead (movAddress2);
-    if (GetMnem (pushAddress) == "push" 
-    and GetMnem (movAddress) == "mov" 
-    and GetMnem (getObjectAddress) == "call" 
-    and GetMnem (movAddress2) == "mov" 
+    if (GetMnem (pushAddress) == "push"
+    and GetMnem (movAddress) == "mov"
+    and GetMnem (getObjectAddress) == "call"
+    and GetMnem (movAddress2) == "mov"
     and GetMnem (retnAddress) == "retn"
     and GetOperandValue (getObjectAddress, 0) == LuaInterface__getObject):
         sidAddress = GetOperandValue (movAddress2, 0);
@@ -72,9 +73,9 @@ while occ != BADADDR:
     pushSizeAddress = PrevHead (pushStrAddress);
     addAddress = NextHead (occ);
     movAddress = NextHead (addAddress);
-    if (GetMnem (pushStrAddress) == "push" 
-    and GetMnem (pushSizeAddress) == "push" 
-    and GetMnem (addAddress) == "add" 
+    if (GetMnem (pushStrAddress) == "push"
+    and GetMnem (pushSizeAddress) == "push"
+    and GetMnem (addAddress) == "add"
     and GetMnem (movAddress) == "mov"):
         sidAddress = GetOperandValue (movAddress, 0);
         strAddress = GetOperandValue (pushStrAddress, 0);
@@ -82,5 +83,5 @@ while occ != BADADDR:
             strValue = GetString (strAddress);
             if strValue != None:
                 MakeNameForce (sidAddress, "SID_" + strValue);
-    
+
     occ = RnextB (LuaInterface__getObjectEx, occ);
