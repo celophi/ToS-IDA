@@ -62,7 +62,8 @@ struct lua_State
 else:
     # Tip : GetSessionObject is already defined with 5-ToSrenameDebugFunctions.py for discovery
     # Just look for XRef of GetSessionObject and you'll find LuaExtern__declGlobalFunction
-    LuaExtern__declGlobalFunction = 0x0D18570; # ICBT3
+    LuaExtern__declGlobalFunction = 0x00C5A640; # i164556
+    LuaExtern__useTable = 0x00C5A370;
 
     def MakeNameForce (address, name):
         x = 2;
@@ -74,9 +75,19 @@ else:
 
     # Rename all functions declared with LuaExtern__declGlobalFunction
     occ = RfirstB (LuaExtern__declGlobalFunction);
-    while occ != BADADDR:
-        routineAddress = Dword (occ - 5 - 4);
-        routineName = GetString (Dword (occ - 4));
+    while (occ != BADADDR):
+        routineAddress = Dword (occ - 5 - 5);
+        routineName = GetString (Dword (occ - 5));
+
+        #iterate to find table
+        prevAddr = PrevHead(occ)
+        while (prevAddr != BADADDR):
+            if (GetOperandValue(prevAddr, 0) == LuaExtern__useTable):
+                tableName = GetString(Dword(prevAddr - 5));
+                break;
+            prevAddr = PrevHead(prevAddr)
+
         occ = RnextB (LuaExtern__declGlobalFunction, occ);
+        routineName = tableName + "::" + routineName;
         name = MakeNameForce (routineAddress, routineName);
         SetType (routineAddress, "int __cdecl %s (lua_State * luaState)" % name);
