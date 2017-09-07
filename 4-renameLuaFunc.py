@@ -88,6 +88,6 @@ else:
             prevAddr = PrevHead(prevAddr)
 
         occ = RnextB (LuaExtern__declGlobalFunction, occ);
-        routineName = tableName + "::" + routineName;
+        routineName = tableName + "::" + routineName + "::L";
         name = MakeNameForce (routineAddress, routineName);
         SetType (routineAddress, "int __cdecl %s (lua_State * luaState)" % name);
