@@ -62,8 +62,8 @@ struct lua_State
 else:
     # Tip : GetSessionObject is already defined with 5-ToSrenameDebugFunctions.py for discovery
     # Just look for XRef of GetSessionObject and you'll find LuaExtern__declGlobalFunction
-    LuaExtern__declGlobalFunction = 0x00CDEE40; # i175015
-    LuaExtern__useTable = 0x00CDEB70;
+    LuaExtern__declGlobalFunction = 0x00CE2D70; # i183064
+    LuaExtern__useTable = 0x00CE2AA0;
 
     def MakeNameForce (address, name):
         x = 2;
