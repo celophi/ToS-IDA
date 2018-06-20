@@ -56,6 +56,7 @@ struct lua_State
   void *openupval;
   void *gclist;
   void *errorJmp;
+  int errfunc;
 };
 '''.strip();
 
