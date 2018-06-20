@@ -9,7 +9,7 @@ import idc
 import idaapi
 
 s = idautils.Strings(False)
-s.setup(strtypes=Strings.STR_UNICODE | Strings.STR_C)
+s.setup(strtypes=[ida_nalt.STRTYPE_LEN2,ida_nalt.STRTYPE_C])
 for i, v in enumerate(s):
     if v is None:
         print("Failed to retrieve string index %d" % i)
