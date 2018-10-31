@@ -10,12 +10,12 @@ import idc
 if GetStrucIdByName ("lua_State") == BADADDR:
     print "ERROR : Add definition of lua_State first.";
     print '''
-typedef union {
+union LuaValue {
   void *gc;
   void *p;
   double n;
   int b;
-} LuaValue;
+};
 
 struct lua_TValue
 {
@@ -63,8 +63,8 @@ struct lua_State
 else:
     # Tip : GetSessionObject is already defined with 5-ToSrenameDebugFunctions.py for discovery
     # Just look for XRef of GetSessionObject and you'll find LuaExtern__declGlobalFunction
-    LuaExtern__declGlobalFunction = 0x00D80110; # i207317
-    LuaExtern__useTable = 0x00D7FE40;
+    LuaExtern__declGlobalFunction = 0x0066C130; # i225009
+    LuaExtern__useTable = 0x0066BE60;
 
     def MakeNameForce (address, name):
         x = 2;
